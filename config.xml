@@ -78,17 +78,17 @@
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
     </platform>
-    <plugin name="cordova-plugin-inappbrowser" source="npm" spec="^1.7.2" />
-    <plugin name="cordova-plugin-nativestorage" source="npm" spec="^2.2.2" />
-    <plugin name="cordova-plugin-device" source="npm" spec="^1.1.4" />
-    <plugin name="cordova-plugin-ionic-webview" source="npm" spec="^1.1.11" />
-    <plugin name="cordova-plugin-splashscreen" source="npm" spec="^4.0.3" />
+    <plugin name="cordova-plugin-inappbrowser" source="npm" />
+    <plugin name="cordova-plugin-nativestorage" source="npm"/>
+    <plugin name="cordova-plugin-device" source="npm" />
+    <plugin name="cordova-plugin-ionic-webview" source="npm" />
+    <plugin name="cordova-plugin-splashscreen" source="npm"  />
     <plugin name="cordova-plugin-whitelist" source="npm"/>
-    <plugin name="ionic-plugin-keyboard" source="npm" spec="^2.2.1" />
-    <plugin name="cordova-plugin-googleplus" source="npm" spec="^5.1.1">
+    <plugin name="ionic-plugin-keyboard" source="npm"  />
+    <plugin name="cordova-plugin-googleplus" source="npm" >
         <variable name="REVERSED_CLIENT_ID" value="682833730757-8o02j8rpok1b05fn9acippi1mq3q497f.apps.googleusercontent.com" />
     </plugin>
-    <plugin name="cordova-plugin-facebook4" source="npm" spec="^1.9.1">
+    <plugin name="cordova-plugin-facebook4" source="npm">
         <variable name="APP_ID" value="1857095131269263" />
         <variable name="APP_NAME" value="Boom Dome" />
     </plugin>
