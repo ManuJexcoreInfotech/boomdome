@@ -1,0 +1,120 @@
+<ion-header no-border class="home-header">
+  <ion-navbar color="header">
+    <button ion-button menuToggle>
+      <ion-icon name="menu">
+      </ion-icon>
+    </button>
+    <ion-title text-center>{{"Home" | translate}}
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only light color="shadowlite" (click)="getSearch()">
+        <ion-icon ios="ios-search" md="md-search">
+        </ion-icon>
+      </button>
+      <button ion-button icon-only light class="has-icon icon-only has-badge" (click)="getCart()">
+        <ion-icon class="ion-md-cart item-icon">
+        </ion-icon>
+        <ion-badge class="badge badge-light" *ngIf="values.count != 0">{{values.count}}
+        </ion-badge>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content class="home">
+    <ion-spinner *ngIf="!service?.banners" name="crescent">
+    </ion-spinner>
+  <div *ngIf="service?.banners" class="home-banners">
+    <ion-slides pager="true" loop="true" autoplay="5800">
+      <ion-slide *ngFor='let value of service.banners'>
+        <img src="{{value}}">
+      </ion-slide>
+    </ion-slides>
+  </div>
+
+  <div *ngIf="service?.categories" class="category-class">
+    <div class="shop-name">
+      <ion-item no-lines>
+        <b color="side-heading-color" text-uppercase>{{"Shop"| translate}}
+        </b>
+      </ion-item>
+    </div>
+    <div *ngIf="service.mainCategories" class="main-categories">
+      <ion-row class="row unlimited-items">
+        <ion-col class="col" *ngFor="let item of service.mainCategories">
+          <a (click)="getCategory(item.id, item.slug, item.name)">
+            <ion-card>
+              <ion-card-content>
+                <img src="{{item.image}}"/>
+              </ion-card-content>
+              <div text-center>
+                <ion-label text-uppercase [innerHTML]="item.name">
+                </ion-label>
+              </div>
+            </ion-card>
+          </a>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+
+    <ion-spinner *ngIf="!products && service?.banners" name="crescent">
+    </ion-spinner>
+
+
+      <div *ngIf="products" class="products-listing">
+      <ion-item no-lines class="item-name">
+        <ion-label>{{"Latest Products" | translate}}
+        </ion-label>
+      </ion-item>
+      <div class="grid">
+        <ion-row class="row unlimited-items">
+          <ion-col class="col" *ngFor="let item of products">
+            <ion-card>
+              <ion-card-content class="stock">
+
+                  <img tappable src="{{item.images[0].src}}" (click)="getProduct(item.id)">
+                  <button ion-button color="danger" *ngIf="!item.in_stock">{{"No Stock" | translate}}
+                  </button>
+
+              
+              <ion-icon name="md-heart" class="wishlist-button-grid1" *ngIf="values.wishlistId[item.id]" (click)="removeFromWishlist(item.id)"></ion-icon>
+              <ion-icon name="md-heart-outline" class="wishlist-button-grid2" *ngIf="!values.wishlistId[item.id]" (click)="addToWishlist(item.id)"></ion-icon>
+
+              
+              </ion-card-content>
+
+              <div tappable (click)="getProduct(item.id)" class="card-name">
+              <ion-label *ngIf="item.title">{{item.title}}
+              </ion-label>
+              <ion-label *ngIf="item.name">{{item.name}}
+              </ion-label>
+              </div>
+
+              <ion-label>
+                 
+                <span class="price-delete" *ngIf="item.sale_price">
+                <del>{{1*item.regular_price | currency:values.currency:true:'1.2-2'}}
+                </del>
+                </span>
+                <span class="price-regular" *ngIf="!item.sale_price">{{1*item.price | currency:values.currency:true:'1.2-2'}}
+                </span>
+                <span class="price-regular" *ngIf="item.sale_price">{{1*item.sale_price | currency:values.currency:true:'1.2-2'}}
+                </span>
+              </ion-label>
+
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </div>
+
+      <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="has_more_items">
+        <ion-infinite-scroll-content
+         loadingSpinner="crescent"
+         loadingText={{values.lan.GettingMoreElements}}>
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+
+        </div>
+
+
+</ion-content>
