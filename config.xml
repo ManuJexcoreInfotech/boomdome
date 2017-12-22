@@ -85,7 +85,13 @@
     <plugin name="cordova-plugin-splashscreen" source="npm"  />
     <plugin name="cordova-plugin-whitelist" source="npm"/>
     <plugin name="ionic-plugin-keyboard" source="npm"  />
-   
+    <plugin name="cordova-plugin-googleplus" source="npm" >
+        <variable name="REVERSED_CLIENT_ID" value="682833730757-8o02j8rpok1b05fn9acippi1mq3q497f.apps.googleusercontent.com" />
+    </plugin>
+    <plugin name="cordova-plugin-facebook4" source="npm">
+        <variable name="APP_ID" value="1857095131269263" />
+        <variable name="APP_NAME" value="Boom Dome" />
+    </plugin>
     <engine name="ios" spec="~4.5.4" />
     <engine name="android" spec="^6.3.0" />
 </widget>
