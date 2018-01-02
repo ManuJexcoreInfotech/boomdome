@@ -117,7 +117,7 @@ export class Service {
         params.append("login", 'Login');
         params.append("redirect", this.url + '/wp-admin/admin-ajax.php?action=mstoreapp-userdata');
 
-        this.sentData = this.url + '/wp-admin/admin-ajax.php?action=mstoreapp-login&username='+a.username+'&password='+a.password+'&_wpnonce='+nonce+'&login=Login&redirect='+this.url + '/wp-admin/admin-ajax.php?action=mstoreapp-userdata';
+        this.sentData = this.url + '/wp-admin/admin-ajax.php?action=mstoreapp-login&username='+a.username+'&password='+a.password+'&_wpnonce='+nonce+'&login=Login';
         console.log("<============== URL DATA =================>");
         console.log(this.sentData);
         console.log(params);
