@@ -57,7 +57,7 @@ export class ProductPage {
     addToCart(id) {
         if (this.product.product.type == 'variable' && this.options.length == 0) {
 
-            this.functions.showAlert('Eroor', 'Please Select Product Option...')
+            this.functions.showAlert('Error', 'Please Select Product Option...')
         }
         
         else {
@@ -75,6 +75,7 @@ export class ProductPage {
             var obj = JSON.parse(text);
             this.service.addToCart(obj)
                 .then((results) => this.updateCart(results));
+             this.functions.showAlert('', 'Product added to your cart successfully')
         }
     }
     chnageProduct() {
@@ -128,10 +129,10 @@ export class ProductPage {
         .then((results) => this.update(results));
     }
     else{
-            this.functions.showAlert("Warning", "You must login to add product to wishlist");
+            this.functions.showAlert("", "You must login to add product to wishlist");
         }
 
-
+        
   }
 
   update(a){

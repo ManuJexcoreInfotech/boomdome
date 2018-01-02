@@ -81,6 +81,7 @@ export class BillingAddressForm {
         if (this.form.payment_method == 'bacs' || this.form.payment_method == 'cheque' || this.form.payment_method == 'cod') {
             this.service.checkout(this.form)
                 .then((results) => this.handleBilling(results));
+                this.functions.showAlert('', 'Goods will be deliver in one week.')
         }
         else if (this.form.payment_method == 'stripe') {
             this.service.getStripeToken(this.form)
@@ -89,6 +90,7 @@ export class BillingAddressForm {
         else {
             this.service.checkout(this.form)
                 .then((results) => this.handlePayment(results));
+                this.functions.showAlert('', 'Goods will be deliver in one week.')
         }
     }
     handlePayment(results) {

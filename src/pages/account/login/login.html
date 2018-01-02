@@ -9,7 +9,7 @@
 <ion-content class="account-login">
 
     <div>
-      <img src="assets/image/menu-logo.jpg">
+      <img src="assets/image/menu-logo.png">
     </div>
 
   <div class="margin">
@@ -30,7 +30,7 @@
 
       </ion-list>
 
-      <button ion-button block color="button-color" type="submit" class="button button-block button-default" text-uppercase [disabled]="disableSubmit" (click)="login(loginData)">{{LogIn | translate}}
+      <button ion-button block color="button-color" type="submit" class="button button-block button-default" text-uppercase [disabled]="disableSubmit" (click)="login(loginData.username,loginData.password)">{{LogIn | translate}}
       </button>
 
 

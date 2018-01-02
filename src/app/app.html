@@ -43,7 +43,7 @@
         <ion-item tappable full menuClose *ngFor="let item of service.mainCategories" (click)="getCategory(item.id, item.slug, item.name)">
           <ion-icon item-right hideWhen="ios" class="ion-ios-arrow-forward item-icon">
           </ion-icon>
-          {{item.name}}         
+                  <div [innerHTML]=item.name></div>
         </ion-item>
       </div>
       </div>
@@ -115,28 +115,29 @@
 
 
     <ion-list no-margin>
-<div class="list-item-divider">
-      <ion-item-divider tappable *ngIf="!showCategories" (click)="dropDown()">
-          <ion-icon item-left name="logo-buffer" style="margin-top: 12px"></ion-icon>
-          {{"Categories" | translate}}
-          <ion-icon name="md-arrow-dropdown" class="drop-icon" (click)="dropDown()"></ion-icon>
-      </ion-item-divider>
-      <ion-item-divider tappable *ngIf="showCategories" (click)="dropup()">
-          <ion-icon item-left name="logo-buffer" style="margin-top: 12px"></ion-icon>
-          {{"Categories" | translate}}
-          <ion-icon name="md-arrow-dropup" class="drop-icon" (click)="dropup()"></ion-icon>
-      </ion-item-divider>
-</div> 
+		<div class="list-item-divider">
+		  <ion-item-divider tappable *ngIf="!showCategories" (click)="dropDown()">
+			  <ion-icon item-left name="logo-buffer" style="margin-top: 12px"></ion-icon>
+			  {{"Categories" | translate}}
+			  <ion-icon name="md-arrow-dropdown" class="drop-icon" (click)="dropDown()"></ion-icon>
+		  </ion-item-divider>
+		  <ion-item-divider tappable *ngIf="showCategories" (click)="dropup()">
+			  <ion-icon item-left name="logo-buffer" style="margin-top: 12px"></ion-icon>
+			  {{"Categories" | translate}}
+			  <ion-icon name="md-arrow-dropup" class="drop-icon" (click)="dropup()"></ion-icon>
+		  </ion-item-divider>
+		</div>
       
-      <div *ngIf="showCategories">      
-      <div *ngIf="service.categories" class="category-name">
-        <ion-item tappable full menuClose *ngFor="let item of service.mainCategories" (click)="getCategory(item.id, item.slug, item.name)">
-          <ion-icon item-right hideWhen="ios" class="ion-ios-arrow-forward item-icon">
-          </ion-icon>
-          {{item.name}}         
-        </ion-item>
-      </div>
-      </div>
+		<div *ngIf="showCategories">      
+		  <div *ngIf="service.categories" class="category-name">
+			<ion-item tappable full menuClose *ngFor="let item of service.mainCategories" (click)="getCategory(item.id, item.slug, item.name)">
+			  <ion-icon item-right hideWhen="ios" class="ion-ios-arrow-forward item-icon">
+			  </ion-icon>
+			  <div [innerHTML]=item.name></div>
+				<!--{{item.name}} 			  -->
+			</ion-item>
+		  </div>
+		</div>
     </ion-list>
 
 

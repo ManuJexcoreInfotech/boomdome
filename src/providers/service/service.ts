@@ -32,6 +32,7 @@ export class Service {
     mainCategories: any;
     country: any;
     user: any;
+    sentData:any;
     login_nonce: any;
     dir: any = 'left';
     googleResponse: any;
@@ -106,15 +107,25 @@ export class Service {
         });
     }
     login(a, nonce) {
+        console.log(a);
         var params = new URLSearchParams();
         params.append("username", a.username);
         params.append("password", a.password);
+        console.log(a.username);
+        console.log(a.username);
         params.append("_wpnonce", nonce);
         params.append("login", 'Login');
         params.append("redirect", this.url + '/wp-admin/admin-ajax.php?action=mstoreapp-userdata');
+
+        this.sentData = this.url + '/wp-admin/admin-ajax.php?action=mstoreapp-login&username='+a.username+'&password='+a.password+'&_wpnonce='+nonce+'&login=Login&redirect='+this.url + '/wp-admin/admin-ajax.php?action=mstoreapp-userdata';
+        console.log("<============== URL DATA =================>");
+        console.log(this.sentData);
+        console.log(params);
         return new Promise(resolve => {
-            this.http.post(this.url + '/wp-admin/admin-ajax.php?action=mstoreapp-login', params).map(res => res.json())
+            this.http.post(this.sentData, params).map(res => res.json())
                 .subscribe(data => {
+                    console.log("<============== Output DATA =================>");
+                    console.log(data);
                     if (!data.errors) {
                         this.values.isLoggedIn = data.data.status;
                         this.values.customerName = data.data.display_name;
@@ -152,6 +163,7 @@ export class Service {
                 .subscribe(data => {
                     this.values.isLoggedIn = false;
                     this.values.customerName = "";
+					this.values.customerId = 0;
                     this.http.get(this.url + '/wp-admin/admin-ajax.php?action=mstoreapp-cart').map(res => res.json())
                         .subscribe(data => {
                             this.cart = data;
@@ -301,18 +313,18 @@ export class Service {
         this.loader.dismiss();
     }
 
-         addToWishlist(id) {
-    return new Promise(resolve => {
-      var params = new URLSearchParams();
-      params.append("product_id", id);
-      params.append("customer_id", this.values.customerId.toString());
-      this.http.post(this.url + '/wp-admin/admin-ajax.php?action=mstoreapp-add_wishlist', params).map(res => res.json())
-        .subscribe(data => {
-          this.status = data;
-          resolve(this.status);
-        });
-    });
-  }
+    addToWishlist(id) {
+		return new Promise(resolve => {
+		  var params = new URLSearchParams();
+		  params.append("product_id", id);
+		  params.append("customer_id", this.values.customerId.toString());
+		  this.http.post(this.url + '/wp-admin/admin-ajax.php?action=mstoreapp-add_wishlist', params).map(res => res.json())
+			.subscribe(data => {
+			  this.status = data;
+			  resolve(this.status);
+			});
+		});
+	}
 
     deleteItem(id){
   
@@ -364,20 +376,29 @@ export class Service {
             this.values.setNavigation = true;
             this.values.customerName = data.last_name;
             this.values.customerId = data.user_id;
+            this.values.avatar = data.avatar;
+            this.nativeStorage.setItem('avatar', data.avatar)
+            .then(
+                data => console.log('Avatar Stored'),
+                error => console.error(error)
+            );
             resolve(data);
-           // this.values.avatar = data.avatar; 
-
         }
         });
     });
     }
 
-    googleLogin(token, email, first_name, last_name){
+    googleLogin(res){
     var params = new URLSearchParams();
-    params.append("access_token", token);
-    params.append("email", email);
-    params.append("first_name", first_name);
-    params.append("last_name", last_name);
+    params.append("access_token", res.userId);
+    params.append("email", res.email);
+    params.append("first_name", res.displayName);
+    params.append("last_name", res.displayName);
+    this.nativeStorage.setItem('avatar', res.imageurl)
+    .then(
+        data => console.log('Avatar Stored'),
+        error => console.error(error)
+    );
         return new Promise(resolve => {
         this.http.post(this.url + '/wp-admin/admin-ajax.php?action=mstoreapp-google_connect', params).map(res => res.json())
         .subscribe(data => {
@@ -387,10 +408,9 @@ export class Service {
 
             this.values.isLoggedIn = true;
             this.values.setNavigation = true;
-            this.values.customerName = last_name;
+            this.values.customerName = data.last_name;
             this.values.customerId = data.user_id;
             resolve(data);
-           // this.values.avatar = data.avatar; 
 
           }
             //this.status = data;

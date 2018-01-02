@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {Platform, Nav, AlertController} from 'ionic-angular';
+import {Platform, Nav, AlertController,LoadingController} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {Home} from '../pages/home/home';
@@ -7,8 +7,6 @@ import {Service} from '../providers/service/service';
 import {Values} from '../providers/service/values';
 import { TranslateService } from '@ngx-translate/core';
 //import { Push, PushObject, PushOptions } from '@ionic-native/push';
-
-
 
 @Component({
   templateUrl: 'app.html'
@@ -18,6 +16,7 @@ export class MyApp {
 
   rootPage: any = Home;
   status: any;
+  loading1:any;
   pages: Array<{title: string, component: any}>
   menu: Array<{title: string, component: any}>
   configuration: any;
@@ -25,7 +24,7 @@ export class MyApp {
    buttonLanguagesSettings: boolean= false;
    showCategories: boolean= false;
 
-  constructor(statusBar: StatusBar, splashScreen: SplashScreen, public alertCtrl: AlertController, public platform: Platform, public service: Service, public values: Values, public translateService: TranslateService) {
+  constructor(statusBar: StatusBar, splashScreen: SplashScreen, public alertCtrl: AlertController, public platform: Platform, public service: Service, public values: Values, public translateService: TranslateService,public Loading:LoadingController) {
     platform.ready().then(() => {
      statusBar.styleDefault();
      splashScreen.hide();
@@ -54,7 +53,13 @@ export class MyApp {
         this.nav.setRoot('CartPage');
     }
     logout() {
-        this.service.logout();
+        this.loading1 = this.Loading.create();
+        this.loading1.present();
+            this.service.logout();
+        setTimeout(()=>{    
+          this.loading1.dismiss();
+          this.nav.setRoot('AccountLogin');
+        },3000);
     }
   
     login(){

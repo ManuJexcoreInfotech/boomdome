@@ -4,8 +4,9 @@
       <ion-icon name="menu">
       </ion-icon>
     </button>
-    <ion-title text-center>{{categoryName}}
-    </ion-title>
+   <!--  <ion-title text-center [innerHTML]="categoryName">
+    </ion-title> -->
+    <div class="categoryname" [innerHTML]=categoryName></div>
     <ion-buttons end>
       <button ion-button icon-only light class="has-icon icon-only has-badge" (click)="getCart()">
         <ion-icon class="ion-md-cart item-icon">
@@ -26,7 +27,7 @@
       </ion-list-header>
       <ion-item>
         <ion-label text-wrap>{{"Default" | translate}}
-        </ion-label>
+        </ion-label>   
         <ion-radio value="0">
         </ion-radio>
       </ion-item>
